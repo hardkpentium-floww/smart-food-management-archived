@@ -7,7 +7,7 @@ from . import APP_NAME, OPERATION_NAME, REQUEST_METHOD, URL_SUFFIX, URL_BASE_PAT
 from ...factories.models import UserFactory, UserAccountFactory
 
 
-class TestCase01LoginAPITestCase(TestUtils):
+class TestCase02LoginAPITestCase(TestUtils):
     APP_NAME = APP_NAME
     URL_BASE_PATH = URL_BASE_PATH
     OPERATION_NAME = OPERATION_NAME
@@ -16,10 +16,10 @@ class TestCase01LoginAPITestCase(TestUtils):
     SECURITY = {}
 
     @pytest.mark.django_db
-    def test_case(self, snapshot):
+    def test_case_with_invalid_username(self, snapshot):
         user = UserFactory()
         user_acc = UserAccountFactory(user_id=user.id, username=user.name, password="password")
-        body = {'username': f'{user.name}', 'password': f'{user_acc.password}'}
+        body = {'username': "invalid", 'password': 'password'}
         path_params = {}
         query_params = {}
         headers = {}

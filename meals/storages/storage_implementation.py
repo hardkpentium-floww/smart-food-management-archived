@@ -1,14 +1,12 @@
 from datetime import datetime
 
 from meals.constants.enums import MealTypeChoices, AteMealStatusChoices, MealPreferenceTypeChoices
-from meals.exceptions.custom_exceptions import UserMealDoesNotExist, InvalidMealType, InvalidMealStatus, \
-    InvalidMealPreference, ItemNotFound, InvalidQuantity
+
 from meals.interactors.storage_interfaces.storage_interface import StorageInterface, AccessTokenDTO, RefreshTokenDTO, \
     ItemDTO, ScheduleMealDTO, MealItemDTO, AdminScheduledMealDTO, AddMealDTO
 import uuid
 
 from meals.models import UserMeal
-from meals_gql.enums import MealTypeEnum
 from meals_gql.meal.types.types import AdminScheduledMeal, MealItem, UserScheduledMeal
 
 
@@ -54,10 +52,10 @@ class StorageImplementation(StorageInterface):
 
         return user_login_response
 
-    def logout(self, user_id: str, access_token:str):
+    def logout(self, user_id: str, access_token_str:str):
         from oauth2_provider.models import AccessToken, RefreshToken
-        access_token = AccessToken.objects.get(token=access_token)
-        refresh_token = RefreshToken.objects.get(access_token=access_token)
+        access_token = AccessToken.objects.get(user_id=user_id,token=access_token_str)
+        refresh_token = RefreshToken.objects.get(user_id=user_id,access_token_id=access_token.id)
         self.expire_access_token(access_token_id=access_token.id)
         self.revoke_refresh_token(refresh_token_id=refresh_token.id)
 

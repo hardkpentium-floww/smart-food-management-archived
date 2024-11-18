@@ -11,7 +11,7 @@ class LogoutInteractor:
 
     def logout(self, access_token:str, user_id:str):
 
-        self.storage.logout(user_id=user_id, access_token=access_token)
+        self.storage.logout(user_id=user_id, access_token_str=access_token)
 
         logout_response = {
               "status_code": 200,
