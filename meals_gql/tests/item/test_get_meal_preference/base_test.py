@@ -1,24 +1,15 @@
 from graphql_service.utils.base_test import GraphQLBaseTestCase
 
 
-class GetItemsTest(GraphQLBaseTestCase):
+class GetMealPreferenceTest(GraphQLBaseTestCase):
     QUERY = """
-    query Query($params: GetItemsParams!) {
-      getItems(params: $params) {
-        ... on Items {
-          items {
-            id
-            name
-            category
-            baseSizeUnit
-            servingSizeUnit
+    query Query($params: GetMealPreferenceParams!) {
+          getMealPreference(params: $params) {
+            ... on UserMealPreference {
+              mealPreference
+            }
           }
         }
-        ... on ItemsNotFound {
-          message
-        }
-      }
-    }
     """
 
 

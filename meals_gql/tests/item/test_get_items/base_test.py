@@ -1,30 +1,21 @@
 from graphql_service.utils.base_test import GraphQLBaseTestCase
 
 
-class BookHotelTest(GraphQLBaseTestCase):
+class GetItemsTest(GraphQLBaseTestCase):
     QUERY = """
-    mutation Mutation($params: BookHotelParams!) {
-      bookHotel(params: $params) {
-      __typename
-        ... on Booking {
-          id
-          userId
-          destinationId
-          hotelId
-          checkinDate
-          checkoutDate
-          tariff
-          totalAmount
+    query Query($params: GetItemsParams!) {
+      getItems(params: $params) {
+        ... on Items {
+          items {
+            id
+            name
+            category
+            baseSizeUnit
+            servingSizeUnit
+          }
         }
-        ... on BookingNotPossible {
-          hotelId
-        }
-        ... on BookingDateNotValid {
-          checkinDate
-          checkoutDate
-        }
-        ... on DestinationNotFound {
-          destinationId
+        ... on ItemsNotFound {
+          message
         }
       }
     }

@@ -1,24 +1,27 @@
 import pytest
 from datetime import datetime, timedelta
 
-from meals.tests.factories.models import ItemFactory
+from meals.tests.factories.models import ItemFactory, MealFactory, UserFactory, UserMealFactory
 from meals_gql.tests.item.test_get_items.base_test import GetItemsTest
+from meals_gql.tests.item.test_get_meal_preference.base_test import GetMealPreferenceTest
 
 
 @pytest.mark.django_db
-class TestCase(GetItemsTest):
+class TestCase(GetMealPreferenceTest):
 
     USER_ID = "test_user"
 
-    def test_get_items(self, snapshot):
+    def test_get_meal_preference(self, snapshot):
         # Arrange
-
-        items = ItemFactory.create_batch(5)
+        meal = MealFactory()
+        user = UserFactory(id=self.USER_ID)
+        user_meal = UserMealFactory(meal_id=meal.id, user_id=user.id)
 
         variables ={
               "params": {
-                "offset": 0,
-                "limit": 5
+                "userId": user.id,
+                "mealId": meal.id,
+                "mealType": meal.meal_type
               }
             }
 

@@ -10,10 +10,10 @@ class TestCase(GetItemsTest):
 
     USER_ID = "test_user"
 
-    def test_get_items(self, snapshot):
+    def test_get_items_with_no_items(self, snapshot):
         # Arrange
 
-        items = ItemFactory.create_batch(5)
+        # items = ItemFactory.create_batch(5)
 
         variables ={
               "params": {

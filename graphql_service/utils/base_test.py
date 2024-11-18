@@ -20,7 +20,7 @@ class GraphQLBaseTestCase:
         variables: Dict,
         snapshot: PyTestSnapshotTest,
     ):
-        from trip_gql.schema import execute_schema
+        from meals_gql.schema import execute_schema
 
         result = execute_schema(
             query,

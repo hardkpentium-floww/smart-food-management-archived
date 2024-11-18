@@ -1,29 +1,24 @@
 import pytest
-from future.backports.datetime import datetime, timedelta
+from datetime import datetime, timedelta
 
-from trip.tests.factories.models import UserFactory, DestinationFactory, HotelFactory
-from trip_gql.tests.booking.test_book_hotel.base_test import BookHotelTest
+from meals.tests.factories.models import ItemFactory
+from meals_gql.tests.item.test_get_items.base_test import GetItemsTest
 
 
 @pytest.mark.django_db
-class TestCase(BookHotelTest):
+class TestCase(GetItemsTest):
 
     USER_ID = "test_user"
 
-    def test_book_hotel(self, snapshot):
+    def test_get_items(self, snapshot):
         # Arrange
 
-        user = UserFactory(id="test_user")
-        destination = DestinationFactory(user_id = user.id)
-        hotel = HotelFactory(destination_id = destination.id)
+        items = ItemFactory.create_batch(5)
 
         variables ={
               "params": {
-                "userId": user.id,
-                "checkinDate": datetime.now(),
-                "checkoutDate": datetime.now()+ timedelta(3),
-                "hotelId": hotel.id,
-                "destinationId": destination.id
+                "offset": 0,
+                "limit": 5
               }
             }
 
