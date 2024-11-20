@@ -71,7 +71,7 @@ class StorageInterface:
         pass
 
     @abstractmethod
-    def logout(self, user_id:str, access_token:str):
+    def logout(self, user_id:str, access_token_str:str):
         pass
 
     @abstractmethod
